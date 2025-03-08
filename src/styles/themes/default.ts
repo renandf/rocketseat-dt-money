@@ -17,4 +17,10 @@ export const defaultTheme = {
   'red-300': '#F75A68',
   'red-500': '#AB222E',
   'red-700': '#7A1921',
+
+  'border-radius-md': '6px',
+
+  'container-content-max-width': '1120px',
+
+  'font-weight-bold': '700',
 } as const
