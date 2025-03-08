@@ -36,14 +36,14 @@ export const SummaryCard = styled.div<SummaryCardProps>`
   }
 
   ${props => props.variant === 'income' && css`
-    svg {
+    strong, svg {
       color: ${props.theme['green-300']};
     }
   `}
 
   ${props => props.variant === 'expense' && css`
-    svg {
-      color: ${props.theme['red-300']};
+    strong, svg {
+      color: ${props.theme['red-200']};
     }
   `}
 
