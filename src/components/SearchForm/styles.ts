@@ -28,9 +28,17 @@ export const SearchFormContainer = styled.form`
     color: ${props => props.theme['green-300']};
     font-weight: 700;
     border-radius: ${props => props.theme['border-radius-md']};
+    cursor: pointer;
     transition: background-color .2s, border-color .2s, color .2s;
 
-    &:hover {
+    &:disabled {
+      background-color: ${props => props.theme['gray-700']};
+      border-color: ${props => props.theme['gray-700']};
+      color: ${props => props.theme['gray-900']};
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
       background-color: ${props => props.theme['green-700']};
       border-color: ${props => props.theme['green-700']};
       color: ${props => props.theme.white};
