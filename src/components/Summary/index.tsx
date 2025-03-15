@@ -1,7 +1,29 @@
 import { CurrencyDollar, TrendDown, TrendUp } from 'phosphor-react'
+import { useContext } from 'react'
+import { TransactionsContext } from '../../contexts/TransactionsContext'
 import { SummaryCard, SummaryContainer } from './styled'
 
 export function Summary() {
+  const { transactions } = useContext(TransactionsContext)
+
+  const summary = transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.type === 'income') {
+        acc.income += transaction.value
+        acc.total += transaction.value
+      } else {
+        acc.expenses += transaction.value
+        acc.total -= transaction.value
+      }
+
+      return acc
+    },
+    {
+      income: 0,
+      expenses: 0,
+      total: 0
+    })
+
   return (
     <SummaryContainer>
       <SummaryCard variant='income'>
@@ -10,7 +32,7 @@ export function Summary() {
           <TrendUp size={24} />
         </header>
 
-        <strong>$17,400.00</strong>
+        <strong>{summary.income}</strong>
       </SummaryCard>
 
       <SummaryCard variant='expense'>
@@ -19,7 +41,7 @@ export function Summary() {
           <TrendDown size={24} />
         </header>
 
-        <strong>$17,400.00</strong>
+        <strong>{summary.expenses}</strong>
       </SummaryCard>
 
       <SummaryCard variant='total'>
@@ -28,7 +50,7 @@ export function Summary() {
           <CurrencyDollar size={24} />
         </header>
 
-        <strong>$17,400.00</strong>
+        <strong>{summary.total}</strong>
       </SummaryCard>
     </SummaryContainer>
   )
