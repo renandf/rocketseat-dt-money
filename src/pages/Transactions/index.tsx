@@ -3,7 +3,8 @@ import { Header } from '../../components/Header'
 import { SearchForm } from '../../components/SearchForm'
 import { Summary } from '../../components/Summary'
 import { TransactionsContext } from '../../contexts/TransactionsContext'
-import { Price, TransactionsContainer, TransactionsTable } from './styles'
+import { dateFormatter, valueFormatter } from '../../utils/formatter'
+import { TransactionsContainer, TransactionsTable, Value } from './styles'
 
 export function Transactions() {
   const { transactions } = useContext(TransactionsContext)
@@ -22,10 +23,17 @@ export function Transactions() {
                 <tr key={transaction.id}>
                   <td>{transaction.description}</td>
                   <td>
-                    <Price variant={transaction.type}>{transaction.value}</Price>
+                    <Value variant={transaction.type}>
+                      {transaction.type === 'expense' && '- '}
+                      {valueFormatter.format(transaction.value)}
+                    </Value>
                   </td>
                   <td>{transaction.category}</td>
-                  <td>{transaction.createdAt}</td>
+                  <td>
+                    {dateFormatter.format(
+                      new Date(transaction.createdAt)
+                    )}
+                  </td>
                 </tr>
               )
             })}

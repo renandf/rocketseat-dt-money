@@ -1,6 +1,7 @@
 import { CurrencyDollar, TrendDown, TrendUp } from 'phosphor-react'
 import { useContext } from 'react'
 import { TransactionsContext } from '../../contexts/TransactionsContext'
+import { valueFormatter } from '../../utils/formatter'
 import { SummaryCard, SummaryContainer } from './styled'
 
 export function Summary() {
@@ -32,7 +33,7 @@ export function Summary() {
           <TrendUp size={24} />
         </header>
 
-        <strong>{summary.income}</strong>
+        <strong>{valueFormatter.format(summary.income)}</strong>
       </SummaryCard>
 
       <SummaryCard variant='expense'>
@@ -41,7 +42,7 @@ export function Summary() {
           <TrendDown size={24} />
         </header>
 
-        <strong>{summary.expenses}</strong>
+        <strong>{valueFormatter.format(summary.expenses)}</strong>
       </SummaryCard>
 
       <SummaryCard variant='total'>
@@ -50,7 +51,7 @@ export function Summary() {
           <CurrencyDollar size={24} />
         </header>
 
-        <strong>{summary.total}</strong>
+        <strong>{valueFormatter.format(summary.total)}</strong>
       </SummaryCard>
     </SummaryContainer>
   )

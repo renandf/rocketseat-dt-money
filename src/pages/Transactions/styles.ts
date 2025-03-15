@@ -31,11 +31,11 @@ export const TransactionsTable = styled.table`
   }
 `
 
-interface PriceProps {
+interface ValueProps {
   variant?: 'income' | 'expense';
 }
 
-export const Price = styled.span<PriceProps>`
+export const Value = styled.span<ValueProps>`
 
   color: ${
     props => props.variant === 'income'
