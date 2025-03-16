@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Dialog from '@radix-ui/react-dialog'
 import { TrendDown, TrendUp, X } from 'phosphor-react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { CloseModal, Content, Overlay, TransactionType, TransactionTypeButton } from './styles'
 
@@ -9,13 +9,14 @@ const newTransactionFormSchema = z.object({
   description: z.string(),
   value: z.number(),
   category: z.string(),
-  // type: z.enum(['income', 'expense']),
+  type: z.enum(['income', 'expense']),
 })
 
 type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function NewTransactionModal() {
   const {
+    control,
     register,
     handleSubmit,
     formState: { isSubmitting },
@@ -62,23 +63,34 @@ export function NewTransactionModal() {
             {...register('category')}
           />
 
-          <TransactionType>
-            <TransactionTypeButton
-              variant="expense"
-              value="expense"
-            >
-              <TrendDown size={20} />
-              Expense
-            </TransactionTypeButton>
+          <Controller
+            control={control}
+            name="type"
+            render={({ field }) => {
+              return (
+                <TransactionType
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <TransactionTypeButton
+                    variant="expense"
+                    value="expense"
+                  >
+                    <TrendDown size={20} />
+                    Expense
+                  </TransactionTypeButton>
 
-            <TransactionTypeButton
-              variant="income"
-              value="income"
-            >
-              <TrendUp size={20} />
-              Income
-            </TransactionTypeButton>
-          </TransactionType>
+                  <TransactionTypeButton
+                    variant="income"
+                    value="income"
+                  >
+                    <TrendUp size={20} />
+                    Income
+                  </TransactionTypeButton>
+                </TransactionType>
+              )
+            }}
+          />
 
           <button type="submit" disabled={isSubmitting}>
             Add transaction
